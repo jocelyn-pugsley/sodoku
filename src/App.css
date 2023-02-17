@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+#boardTable {
+  width: 70%;
+}
+
+.numInput {
+  width: 40px;
+}
