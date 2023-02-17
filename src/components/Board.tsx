@@ -18,7 +18,8 @@ const Board = (props: any) => {
       ]
 
       const [board, updateBoard] = useState(starting_board)
-
+      const [message, setMessage] = useState("test")
+ 
 
     useEffect(() => {
         console.log(board)
@@ -30,6 +31,42 @@ const Board = (props: any) => {
             prevState[row][col] = parseInt(value)
             return prevState
         })
+    }
+
+    const checkWin = () => {
+        let win = true;
+        //check that every row has no repeated values
+        for( let i = 0; i < board.length; i++ ) {
+            let foundVals: Array<number> = []
+            for( let j = 0; j < board[i].length; j++ ){
+                if(board[i][j] == 0) {
+                    setMessage("")
+                }else if( board[i][j] in foundVals ) {
+                    
+                    win = false;
+                    setMessage("Duplicate value found.")
+                }
+                foundVals.push(board[i][j])
+                console.log(foundVals)
+            }
+        }
+
+        if( win ) {
+            //check columns
+            for( let i = 0; i < board[0].length; i++ ) {
+                let foundVals: Array<number> = []
+                for( let j = 0; j < board.length; i++ ) {
+                    if(board[i][j] == 0) {
+                        setMessage("")
+                    }else if( board[i][j] in foundVals) {
+                        win = false
+                        setMessage("Duplicate value found.")
+                    } else {
+                        foundVals.push(board[i][j])
+                    }
+                }
+            }
+        }
     }
 
     return (
@@ -48,6 +85,11 @@ const Board = (props: any) => {
                     )}
                 </tbody>
             </table>
+
+            
+            <p>{message}</p>
+
+            <button onClick={checkWin}>Validate</button>
         </div>
     )
 }
